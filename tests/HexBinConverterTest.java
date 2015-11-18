@@ -1,13 +1,8 @@
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+
 
 import static org.junit.Assert.*;
 
@@ -131,9 +126,146 @@ public class HexBinConverterTest {
 	}
 	
 	// DEC to HEX
+	@Test
 	public void convertDecToHex_GivenInt4097589_ShouldReturn3E8635()
 	{
 		assertEquals("", "3E8635", hc.convertDecToHex(4097589));
+	}
+	
+	@Test
+	public void convertDecToHex_GivenDecValue1_ShouldReturnStringContent1()
+	{
+		assertEquals("", "1", hc.convertDecToHex(1));
+	}
+	
+	@Test
+	public void convertDecToHex_GivenDecValue16777215_ShouldReturnStringContentFFFFFF()
+	{
+		assertEquals("","FFFFFF", hc.convertDecToHex(16777215));
+	}
+	
+	@Test
+	public void convertDecToHex_GivenDecValue0_ShouldReturnStringContent0()
+	{		
+		assertEquals("", "0", hc.convertDecToHex(0));
+	}
+	
+	// DEC to BIN
+	@Test
+	public void convertDecToBin_GivenInt4097589_ShouldReturn1111101000011000110101()
+	{
+		assertEquals("", "1111101000011000110101", hc.convertDecToBin(4097589));
+	}
+	
+	@Test
+	public void convertDecToBin_GivenDecValue1_ShouldReturnStringContent1()
+	{
+		assertEquals("", "1", hc.convertDecToBin(1));
+	}
+	
+	@Test
+	public void convertDecToBin_GivenDecValue16777215_ShouldReturnStringContentFFFFFF()
+	{
+		assertEquals("","111111111111111111111111", hc.convertDecToBin(16777215));
+	}
+	
+	@Test
+	public void convertDecToBin_GivenDecValue0_ShouldReturnStringContent0()
+	{		
+		assertEquals("", "0", hc.convertDecToBin(0));
+	}
+	
+	// Bitwise OR
+	@Test
+	public void applyBitwiseOR_GivenBitString1111101000011000110101and1001101010011010111101_ShouldReturnBitString1111101010011010111101()
+	{
+		assertEquals("", "1111101010011010111101", hc.applyBitwiseOR("1111101000011000110101", "1001101010011010111101"));
+//		1111101000011000110101 OR
+//		1001101010011010111101 =
+//		1111101010011010111101
+	}
+	
+	@Test
+	public void applyBitwiseOR_GivenUnequalLengthStrings_ShouldThrowIllegalArgumentException()
+	{
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("BitStrings need to be the same length.");
+		hc.applyBitwiseOR("101010", "10101011"); // uneven length
+	}
+	
+	@Test
+	public void applyBitwiseOR_GivenEitherStringIsNull_ShouldReturnStringContent0() 
+	{
+		String s1 = null;
+		String s2 = "10";
+		assertEquals("", "0", hc.applyBitwiseOR(s1, s2));
+		s1 = "1010";
+		s2 = null;
+		assertEquals("", "0", hc.applyBitwiseOR(s1, s2));
+		s1 = null;
+		s2 = null;
+		assertEquals("", "0", hc.applyBitwiseOR(s1, s2));
+	}
+	
+	@Test
+	public void applyBitwiseOR_GivenEitherStringIsEmpty_ShouldReturnStringContent0() 
+	{
+		String s1 = "";
+		String s2 = "10";
+		assertEquals("", "0", hc.applyBitwiseOR(s1, s2));
+		s1 = "1010";
+		s2 = "";
+		assertEquals("", "0", hc.applyBitwiseOR(s1, s2));
+		s1 = "";
+		s2 = "10";
+		assertEquals("", "0", hc.applyBitwiseOR(s1, s2));
+	}
+	
+	// Bitwise AND
+	@Test
+	public void applyBitwiseAND_GivenBitString()
+	{
+		assertEquals("", "1001101000011000110101", hc.applyBitwiseAND("1111101000011000110101", "1001101010011010111101"));
+
+//		1111101000011000110101 AND
+//		1001101010011010111101 =
+//		1001101000011000110101		
+	}
+	
+	@Test
+	public void applyBitwiseAND_GivenUnequalLengthStrings_ShouldThrowIllegalArgumentException()
+	{
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage("BitStrings need to be the same length.");
+		hc.applyBitwiseAND("101010", "10101011"); // uneven length
+	}
+	
+	@Test
+	public void applyBitwiseAND_GivenEitherStringIsNull_ShouldReturnStringContent0() 
+	{
+		String s1 = null;
+		String s2 = "10";
+		assertEquals("", "0", hc.applyBitwiseAND(s1, s2));
+		s1 = "1010";
+		s2 = null;
+		assertEquals("", "0", hc.applyBitwiseAND(s1, s2));
+		s1 = null;
+		s2 = null;
+		assertEquals("", "0", hc.applyBitwiseAND(s1, s2));
+	}
+	
+	@Test
+	public void applyBitwiseAND_GivenEitherStringIsEmpty_ShouldReturnStringContent0() 
+	{
+		String s1 = "";
+		String s2 = "10";
+		assertEquals("", "0", hc.applyBitwiseAND(s1, s2));
+		s1 = "1010";
+		s2 = "";
+		assertEquals("", "0", hc.applyBitwiseAND(s1, s2));
+		s1 = "";
+		s2 = "10";
+		assertEquals("", "0", hc.applyBitwiseAND(s1, s2));
 	}
 	
 }

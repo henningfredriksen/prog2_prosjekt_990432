@@ -8,7 +8,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public class HexToDecParameterizedTest {
+public class BinToDecParameterizedTest {
 	
 	private String input;
 	private int expected;
@@ -19,14 +19,14 @@ public class HexToDecParameterizedTest {
 	public static List<Object[]> hexToDec() {
 		return Arrays.asList(new Object[][] {			
 			{"1", 1}, // min
-			{"FFFFFF", 16777215}, // max			
-			{"3E8635", 4097589}, // random 6 digit
-			{"3E8", 1000} // non-6 digit
+			{"111111111111111111111111", 16777215}, // max			
+			{"1111101000011000110101", 4097589}, // random 6 digit
+			{"0000001111101000", 1000} // non-6 digit
 		});
 	}
 	
 	// constructor
-	public HexToDecParameterizedTest(String input, int expected) {
+	public BinToDecParameterizedTest(String input, int expected) {
 		this.input = input;
 		this.expected = expected;
 	}
@@ -38,8 +38,8 @@ public class HexToDecParameterizedTest {
 	}
 	
 	@Test	
-	public void convertHexToDec_ParameterizedTest()
+	public void convertBinToDec_ParameteriedTest()
 	{
-		assertEquals(expected, hc.convertHexToDec(input), 0.0);
+		assertEquals(expected, hc.convertBinToDec(input), 0.0);
 	}
 }
