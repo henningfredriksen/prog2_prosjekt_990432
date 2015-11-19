@@ -16,7 +16,7 @@ public class BinToDecParameterizedTest {
 	private HexBinConverter hc;
 	
 	@Parameters
-	public static List<Object[]> hexToDec() {
+	public static List<Object[]> binToDec() {
 		return Arrays.asList(new Object[][] {			
 			{"1", 1}, // min
 			{"111111111111111111111111", 16777215}, // max			
