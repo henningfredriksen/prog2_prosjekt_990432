@@ -97,6 +97,7 @@ public class DataHandler {
 			String bitwiseModifiedString = "";
 			int convertedToDec = 0;
 			
+			// bitwiseModifiedString
 			if (bitwiseModifier == 1) // AND
 			{
 				bitwiseModifiedString = hbc.applyBitwiseAND(split[2], split[3]);
@@ -106,9 +107,10 @@ public class DataHandler {
 				bitwiseModifiedString = hbc.applyBitwiseOR(split[2], split[3]);
 			}
 			
+			// convertedToDec
 			convertedToDec = hbc.convertBinToDec(bitwiseModifiedString);
 			
-			// check if hexvalue exists, then log the error (set.add returns false)
+			// check if hex-value exists, then log the error (set.add returns false)
 			if (!data.containsValue(id))
 			{
 				data.put(id, new MeasuredData(id, bitwiseModifier, s1, s2, bitwiseModifiedString, convertedToDec));

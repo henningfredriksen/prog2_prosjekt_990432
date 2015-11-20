@@ -94,7 +94,7 @@ public class DataHandlerTest {
 	@Test
 	public void validateEntry_GivenZeroValues_ShouldThrowIllegalArgumentException()
 	{
-		String s = "0 1 0 0"; // bitwiseOperator has seperate check
+		String s = "0 1 0 0"; // bitwiseOperator has separate check
 		exception.expect(IllegalArgumentException.class);
 		exception.expectMessage("No values can be 0.");
 		dh.validateEntry(s);
@@ -146,6 +146,8 @@ public class DataHandlerTest {
 		String s = "FFFFFF 1 111111111111111111111111 111111111111111111111111";
 		assertTrue(dh.saveData(s));
 	}
+	
+	// invalid strings tested via validateEntry
 	
 	// GET_MEASURED_DATA_BY_ID tests
 	@Test
