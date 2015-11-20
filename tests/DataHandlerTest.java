@@ -1,4 +1,7 @@
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -172,13 +175,27 @@ public class DataHandlerTest {
 		assertEquals("", null, md);
 	}
 	
+	// READ_LINES tests
 	@Test
 	public void stuff()
 	{
 //		BufferedReader bufferedReader = Mockito.mock(BufferedReader.class);
-//		Mockito.when(bufferedReader.readLine()).thenReturn("line1", "line2", "line3");
-//		dh.readFile(bufferedReader);
-		//verify result
+//		
+//		List<String> input = new ArrayList<String>();
+//		input.add("b40a1e 1 001000011110011101001111 000101010101010101111001");
+//		input.add("ac0e1e 2 001000011110011101001111 000101010101010101111001");
+//		
+//		Mockito.when(dh.readLines(bufferedReader)).thenReturn("b40a1e 1 001000011110011101001111 000101010101010101111001","ac0e1e 2 001000011110011101001111 000101010101010101111001" );
+//	//	Mockito.doReturn(input).when(DataHandler).dh.readLines(bufferedReader);
+//		
+//		List<String> lines = new ArrayList<String>();
+//		lines = dh.readLines(bufferedReader);
+//		//verify result
+//		
+//		assertEquals("", "b40a1e 1 001000011110011101001111 000101010101010101111001", lines.get(0));
+//		assertEquals("", "ac0e1e 2 001000011110011101001111 000101010101010101111001", lines.get(1));
+//		
+//		
 	}
 	
 	

@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -47,7 +48,7 @@ public class DataHandler {
 		{
 			File file = new File("MeasuredData.txt");
 
-			// if file doesnt exists, then create it
+			// if file doesn't exist, then create it
 			if (!file.exists()) 
 			{
 				file.createNewFile();
@@ -70,18 +71,34 @@ public class DataHandler {
 	public void readFile(/*BufferedReader r*/)
 	{
 		BufferedReader bufferedReader = null;
+		
+		try {
+			bufferedReader = new BufferedReader(new FileReader("MeasuredData.txt"));
+			readLines(bufferedReader);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void readLines(BufferedReader br)
+	{		
+//		List<String> lines = new ArrayList<String>();
 		try
 		{
-			bufferedReader = new BufferedReader(new FileReader("MeasuredData.txt"));
 			String currentLine;
-
-			while ((currentLine = bufferedReader.readLine()) != null) 
+			
+			while ((currentLine = br.readLine()) != null) 
 			{
+//				lines.add(currentLine);
 				saveData(currentLine);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
+		
+//		return lines;
 	}
 	
 	public boolean saveData(String line) 
