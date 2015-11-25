@@ -1,37 +1,28 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.mockito.Mockito;
+import org.junit.runner.RunWith;
+
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-  
+@RunWith(MockitoJUnitRunner.class)  
 public class DataHandlerTest {
 	
 	@Rule
 	public final ExpectedException exception = ExpectedException.none();
 
 	DataHandler dh;
-	
-	
-	// seed
-//	output.println("03ac0f 1 110101000000110111001101 001000011110011101001111");
-//	output.println("ac0e1e 2 001000011110011101001111 000101010101010101111001");
-//	output.println("6456ab 1 000101010111110000000011 000100001100101110011001");
-//	output.println("b95a4a 2 001000010101110101001111 001000101011111001010111");
-
+	IDataHandler idh; 
 	
 	@Before
 	public void Setup()
 	{
-		dh = new DataHandler();
+		dh = new DataHandler();		
+		idh = mock(IDataHandler.class); // mocked datahandler via interface injection
 	}
 	
 	// VALIDATE_ENTRY tests
@@ -83,7 +74,7 @@ public class DataHandlerTest {
 	@Test
 	public void validateEntry_GivenMinimalValues_ShouldReturnTrue() 
 	{
-		String s = "1 1 1 1";
+		String s = "1 1 0 0";
 		assertTrue(dh.validateEntry(s));
 	}
 	
@@ -95,11 +86,11 @@ public class DataHandlerTest {
 	}
 	
 	@Test
-	public void validateEntry_GivenZeroValues_ShouldThrowIllegalArgumentException()
+	public void validateEntry_GivenZeroHexValue_ShouldThrowIllegalArgumentException()
 	{
-		String s = "0 1 0 0"; // bitwiseOperator has separate check
+		String s = "0 1 0 0"; // bitwiseOperator has separate check, bitstrings are allowed to be 0
 		exception.expect(IllegalArgumentException.class);
-		exception.expectMessage("No values can be 0.");
+		exception.expectMessage("Hex value can't be 0.");
 		dh.validateEntry(s);
 	}
 	
@@ -130,10 +121,11 @@ public class DataHandlerTest {
 		dh.validateEntry(s);
 	}
 	
-	// SAVE_DATA tests	
+	// SAVE_DATA tests	(invalid strings tested via validateEntry marked tests, so few tests needed)
 	@Test
 	public void saveData_GivenValidString_ShouldReturnTrue_usingMockito()
 	{
+		// just a demonstration of using Mockito for a simple test, pure JUnit test below
 		dh = mock(DataHandler.class);
 		
 		// define return value for method
@@ -148,9 +140,7 @@ public class DataHandlerTest {
 	{
 		String s = "FFFFFF 1 111111111111111111111111 111111111111111111111111";
 		assertTrue(dh.saveData(s));
-	}
-	
-	// invalid strings tested via validateEntry
+	}	
 	
 	// GET_MEASURED_DATA_BY_ID tests
 	@Test
@@ -175,27 +165,21 @@ public class DataHandlerTest {
 		assertEquals("", null, md);
 	}
 	
-	// READ_LINES tests
+	// READ FROM FILE MOCKING (idh mocked via interface injection)
 	@Test
-	public void stuff()
+	public void openFile_WhenOpenFileMethodRun_ShouldReturnTrue()
+	{		
+		when(idh.openFile()).thenReturn(true); 
+		
+		assertTrue(idh.openFile());
+	}
+		
+	@Test
+	public void readLine_WhenReadAllLinesMethodRun_ShouldReturnValidString()
 	{
-//		BufferedReader bufferedReader = Mockito.mock(BufferedReader.class);
-//		
-//		List<String> input = new ArrayList<String>();
-//		input.add("b40a1e 1 001000011110011101001111 000101010101010101111001");
-//		input.add("ac0e1e 2 001000011110011101001111 000101010101010101111001");
-//		
-//		Mockito.when(dh.readLines(bufferedReader)).thenReturn("b40a1e 1 001000011110011101001111 000101010101010101111001","ac0e1e 2 001000011110011101001111 000101010101010101111001" );
-//	//	Mockito.doReturn(input).when(DataHandler).dh.readLines(bufferedReader);
-//		
-//		List<String> lines = new ArrayList<String>();
-//		lines = dh.readLines(bufferedReader);
-//		//verify result
-//		
-//		assertEquals("", "b40a1e 1 001000011110011101001111 000101010101010101111001", lines.get(0));
-//		assertEquals("", "ac0e1e 2 001000011110011101001111 000101010101010101111001", lines.get(1));
-//		
-//		
+		when(idh.readAllLines()).thenReturn(true);
+		
+		assertTrue(idh.readAllLines());
 	}
 	
 	

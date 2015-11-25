@@ -2,20 +2,11 @@
  * Utility class that handles conversion back and forth from hexidecimal and binary to decimal,
  * as well as being able to apply bitwise AND/OR operations to bitstrings.
  * 
- * Validation methods are public to allow for direct testing.
+ * Validation methods are protected instead of private to allow for direct testing.
  * 
  * @author Henning Fredriksen (990432)
  */
 public class HexBinConverter {
-
-	
-	/**
-	 *  Constructor
-	 */
-	public HexBinConverter()
-	{
-		
-	}	
 	
 	/**
 	 * Performs a bitwise OR operation on two strings of equal length.
@@ -50,13 +41,9 @@ public class HexBinConverter {
 		for (int i = 0; i < s1.length(); i++)
 		{
 			if (s1.charAt(i) == '0' && s2.charAt(i) == '0')
-			{
 				sb.append(0);
-			}
-			else
-			{
-				sb.append(1);
-			}
+			else			
+				sb.append(1);			
 		}
 		return sb.toString();
 	}
@@ -93,13 +80,9 @@ public class HexBinConverter {
 		for (int i = 0; i < s1.length(); i++)
 		{
 			if (s1.charAt(i) == '1' && s2.charAt(i) == '1')
-			{
 				sb.append(1);
-			}
 			else
-			{
 				sb.append(0);
-			}
 		}
 		return sb.toString();
 	}
@@ -121,20 +104,20 @@ public class HexBinConverter {
 		
 		// ex. lets start with input as 13
 		// Iteration:
-		// 1: adds 1 to front of the sb since 13 is not divisible by 2, 1 is subtracted, halved input is now 6
+		// 1: adds 1 to front of the sb since 13 is not divisible by 2, halved input is now 6
 		// 2: adds 0 since 6 is divisible by 2, halved input is now 3
-		// 3: adds 1 to the front of the sb since 3 is not divisible by 2, 1 is subtracted, halved input is now 1
-		// 4: adds 1 to the front of the queue since 1 is not divisible by 2, 1 is subtracted,
+		// 3: adds 1 to the front of the sb since 3 is not divisible by 2, halved input is now 1
+		// 4: adds 1 to the front of the queue since 1 is not divisible by 2,
 		// input is 0 now, halting the while-loop. Result is 1101.
 		while (input > 0)
 		{
 			int number = input % 2; // gets the furthest right number not divisible by 2 (1 or 0)
-			input = input - number; // subtracts the number from input, now that the overflow has been saved
 			sb.insert(0, (legitBinValues.charAt(number))); // inserts the number at the front of the string
-			input = input / 2; // halves the input
+			input = input / 2; // halves the input, since it's an int the rest is discarded
 		}		
 		return sb.toString();
 	}
+	
 	/**
 	 * Converts a decimal number to a hex-string.
 	 * 
@@ -153,10 +136,9 @@ public class HexBinConverter {
 		// same principle as convertDecToBin(), detailed there
 		while (input > 0)
 		{
-			int number = input % 16; // gets the furthest right number not divisible by 16
-			input = input - number; // subtracts the number from input, now that the overflow has been saved
+			int number = input % 16; // gets the furthest right number not divisible by 16			
 			sb.insert(0, (legitHexValues.charAt(number))); // inserts the number at the front of the string
-			input = input / 16; // divides the input by 16
+			input = input / 16; // divides the input by 16, since it's an int the rest is discarded
 		}		
 		return sb.toString();
 	}
@@ -177,7 +159,7 @@ public class HexBinConverter {
 		if (input.isEmpty())
 			return 0;
 		
-		// validates bitstring, checks if it exceed the max string size or
+		// validates bitstring, checks if it exceeds the max string size or
 		// contain other characters than 0 and 1
 		validateBinString(input);
 		
@@ -207,7 +189,7 @@ public class HexBinConverter {
 	 * 
 	 * @param input Bitstring.
 	 */
-	public void validateBinString(String input)
+	protected void validateBinString(String input)
 	{
 		// checks if the length of the bitstring exceeds 24, if it does it throws an IllegalArgumentException
 		if (input.length() > 24)
@@ -218,9 +200,7 @@ public class HexBinConverter {
 		for (int i = 0; i < input.length(); i++)
 		{
 			if (!(input.charAt(i) >= '0' && input.charAt(i) <= '1'))
-			{
-				throw new IllegalArgumentException("String contained non-binary values.");
-			}
+				throw new IllegalArgumentException("String contained non-binary values.");			
 		}
 	}
 	
@@ -251,14 +231,11 @@ public class HexBinConverter {
 		// iterates through each character of the string, see convertBinToDec for details, same principle
 		for (int i = 0; i < s.length(); i++)
 		{
-			if (s.charAt(i) >= '0' && s.charAt(i) <= '9')
-			{
+			if (s.charAt(i) >= '0' && s.charAt(i) <= '9')			
 				result = (result * 16) + s.charAt(i) - '0';
-			}
-			if (s.charAt(i) >= 'A' && s.charAt(i) <= 'F')
-			{
-				result = (result * 16) + (10 + s.charAt(i) - 'A');
-			}
+			
+			if (s.charAt(i) >= 'A' && s.charAt(i) <= 'F')			
+				result = (result * 16) + (10 + s.charAt(i) - 'A');			
 		}		
 		return result;
 	}
@@ -269,7 +246,7 @@ public class HexBinConverter {
 	 * 
 	 * @param input A hexidecimal number in string form.
 	 */
-	public void validateHexString(String input)
+	protected void validateHexString(String input)
 	{
 		// checks if the length of the hexstring exceeds 6, if it does it throws an IllegalArgumentException
 		if (input.length() > 6)
@@ -282,9 +259,7 @@ public class HexBinConverter {
 		for (int i = 0; i < s.length(); i++)
 		{
 			if (!((s.charAt(i) >= '0' && s.charAt(i) <= '9') || (s.charAt(i) >= 'A' && s.charAt(i) <= 'F')))
-			{
-				throw new IllegalArgumentException("String contained non-0123456789ABCDEF values.");
-			}
+				throw new IllegalArgumentException("String contained non-0123456789ABCDEF values.");			
 		}
 	}
 }

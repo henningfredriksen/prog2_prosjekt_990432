@@ -1,4 +1,9 @@
-
+/**
+ * Data class to store a single instance of measured data
+ * 
+ * @author Henning Fredriksen (990432)
+ *
+ */
 public class MeasuredData {
 	private String id;
 	private int bitwiseModifier;

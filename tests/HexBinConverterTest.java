@@ -6,13 +6,6 @@ import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
-/**
- * Metodesignatur testmetoder:
-		navnPÂMetodeSomTestes_InputParametre_ForventetResultat()
-Eksempel:
-		lastIndexOf_GivenStringWhereCharDoesNotExist_ShouldReturnMinusOne()
-		hexToInt_TooLongString_ShouldThrowIllegalArgumentException()
- */
 public class HexBinConverterTest {
 
 	
@@ -180,9 +173,6 @@ public class HexBinConverterTest {
 	public void applyBitwiseOR_GivenBitString1111101000011000110101and1001101010011010111101_ShouldReturnBitString1111101010011010111101()
 	{
 		assertEquals("", "1111101010011010111101", hc.applyBitwiseOR("1111101000011000110101", "1001101010011010111101"));
-//		1111101000011000110101 OR
-//		1001101010011010111101 =
-//		1111101010011010111101
 	}
 	
 	@Test
@@ -223,13 +213,9 @@ public class HexBinConverterTest {
 	
 	// Bitwise AND
 	@Test
-	public void applyBitwiseAND_GivenBitString()
+	public void applyBitwiseAND_GivenBitString1111101000011000110101and1001101010011010111101_ShouldReturn1001101000011000110101()
 	{
 		assertEquals("", "1001101000011000110101", hc.applyBitwiseAND("1111101000011000110101", "1001101010011010111101"));
-
-//		1111101000011000110101 AND
-//		1001101010011010111101 =
-//		1001101000011000110101		
 	}
 	
 	@Test
