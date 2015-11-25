@@ -24,3 +24,5 @@
 - Hvis du syns det er eksessive mengder kommentarer så er det kun for å demonstrere hva som skjer,
 	ikke slik jeg vanligvis skriver kode, så vennligst overse det :)
 	
+Repository: https://github.com/henningfredriksen/prog2_prosjekt_990432
+Clone Url:  https://github.com/henningfredriksen/prog2_prosjekt_990432.git
